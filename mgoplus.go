@@ -15,12 +15,11 @@ type CollectionStats struct {
 	// The total size of all indexes combined.
 	TotalIndexSize int64 `bson:"totalIndexSize"`
 	LastExtentSize int64 `bson:"lastExtentSize"`
-	// Average size of a document/row.
-	AvgObjSize  int64 `bson:"avgObjSize"`
-	StorageSize int64 `bson:"storageSize"`
-	UserFlags   int   `bson:"userFlags"`
-	Count       int   `bson:"count"`
-	Size        int64 `bson:"size"`
+	AvgObjSize     int64 `bson:"avgObjSize"` // Average size of a document/row.
+	StorageSize    int64 `bson:"storageSize"`
+	UserFlags      int   `bson:"userFlags"`
+	Count          int   `bson:"count"`
+	Size           int64 `bson:"size"`
 	// The namespace of the current collection, which follows
 	// the format [database].[collection].
 	NS string `bson:"ns"`
