@@ -11,6 +11,7 @@ import(
 	"github.com/gabstv/go-mgoplus"
 	"labix.org/v2/mgo"
 	"log"
+	"sort"
 )
 
 func main() {
@@ -39,5 +40,15 @@ func main() {
 	}
 
 	log.Printf("Collection '%s' size is %v bytes.\n", "users", info.Size)
+
+	// retrieve all collection infos and sort by size (in bytes)
+	allstars, err := mgoplus.GetAllCollectionStats(db)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	sort.Sort(mgoplus.SortCollectionStatsBySizeDesc(allstars))
+	for _, v := range allstars {
+		log.Println(v.NS, v.Size)
+	}
 }
 ```
