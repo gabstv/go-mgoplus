@@ -1,3 +1,5 @@
+// Package mgoplus implements admin functions to use with labix.org
+// mongodb driver.
 package mgoplus
 
 import (
@@ -7,15 +9,18 @@ import (
 	"log"
 )
 
+// CollectionStats contains mostly size measurements (in bytes) of a collection.
+// Use GetCollectionStats to retrieve this struct.
 type CollectionStats struct {
-	// The total size of all indexes
+	// The total size of all indexes combined.
 	TotalIndexSize int64 `bson:"totalIndexSize"`
 	LastExtentSize int64 `bson:"lastExtentSize"`
-	AvgObjSize     int64 `bson:"avgObjSize"`
-	StorageSize    int64 `bson:"storageSize"`
-	UserFlags      int   `bson:"userFlags"`
-	Count          int   `bson:"count"`
-	Size           int64 `bson:"size"`
+	// Average size of a document/row.
+	AvgObjSize  int64 `bson:"avgObjSize"`
+	StorageSize int64 `bson:"storageSize"`
+	UserFlags   int   `bson:"userFlags"`
+	Count       int   `bson:"count"`
+	Size        int64 `bson:"size"`
 	// The namespace of the current collection, which follows
 	// the format [database].[collection].
 	NS string `bson:"ns"`
@@ -36,7 +41,7 @@ type CollectionStats struct {
 	//ok int `bson:"ok"`
 }
 
-// Similar to
+// Based on
 // http://docs.mongodb.org/manual/reference/method/db.getCollectionNames/
 func GetCollectionNames(db *mgo.Database) ([]string, error) {
 	raw := make(map[string]interface{})
@@ -56,6 +61,8 @@ func GetCollectionNames(db *mgo.Database) ([]string, error) {
 	return output, nil
 }
 
+// Based on
+// http://docs.mongodb.org/manual/reference/method/db.collection.stats/
 func GetCollectionStats(db *mgo.Database, collectionName string) (CollectionStats, error) {
 	var output CollectionStats
 	//raw := make(map[string]interface{})
